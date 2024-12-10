@@ -8,7 +8,6 @@ namespace MyToDoListApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
     public class TasksController : ControllerBase
     {
         private readonly ILogger<TasksController> _logger;

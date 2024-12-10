@@ -1,4 +1,7 @@
 
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+
 namespace MyToDoListApp
 {
     public class Program
@@ -35,7 +38,6 @@ namespace MyToDoListApp
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -48,9 +50,9 @@ namespace MyToDoListApp
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
+            
             app.Run();
         }
     }
