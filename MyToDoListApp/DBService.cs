@@ -16,8 +16,8 @@ namespace MyToDoListApp
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //azure sql server
-            optionsBuilder.UseSqlServer("Server=tcp:dj.database.windows.net,1433;Initial Catalog=MyToDoListDB;Persist Security Info=False;User ID=azureuser;Password=Ki109ramu$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            //optionsBuilder.UseSqlServer("Server=tcp:dj.database.windows.net,1433;Initial Catalog=MyToDoListDB;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";");
+            //optionsBuilder.UseSqlServer("Server=tcp:dj.database.windows.net,1433;Initial Catalog=MyToDoListDB;Persist Security Info=False;User ID=azureuser;Password=pwd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=tcp:dj.database.windows.net,1433;Initial Catalog=MyToDoListDB;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";");
             
             //local ms sql server
             //optionsBuilder.UseSqlServer("Server=MSI;Database=MyToDoList;Trusted_Connection=True;TrustServerCertificate=True;");
