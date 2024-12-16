@@ -17,7 +17,7 @@ namespace MyToDoListApp.Controllers
             _logger = logger;
         }
         [EnableCors("CorsPolicyGitHub")]
-        [Route("/{**}")]
+        [Route("/{**catchAll}")]
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
         [HttpGet]
         public IActionResult Get(string catchAll)
