@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace MyToDoListApp.Controllers
 {
-    [ApiController]
     [Route("/")]
+    [Authorize]
+    [ApiController]
     public class Controller : ControllerBase
     {
 
@@ -13,8 +16,9 @@ namespace MyToDoListApp.Controllers
         {
             _logger = logger;
         }
-        [EnableCors("CorsPolicyLocalFile")]
-        [Route("/{**catchAll}")]
+        [EnableCors("CorsPolicyGitHub")]
+        [Route("/{**}")]
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
         [HttpGet]
         public IActionResult Get(string catchAll)
         {

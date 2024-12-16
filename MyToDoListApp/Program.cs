@@ -1,6 +1,10 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyToDoListApp
 {
@@ -10,7 +14,17 @@ namespace MyToDoListApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(options =>
+            {
+                builder.Configuration.Bind("AzureAd", options).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+                options.TokenValidationParameters.NameClaimType = "name";
+            }, options => { builder.Configuration.Bind("AzureAd", options); });
+
+            builder.Services.AddAuthorization(config =>
+            {
+                config.AddPolicy("AuthZPolicy", policyBuilder =>
+                    policyBuilder.Requirements.Add(new ScopeAuthorizationRequirement() { RequiredScopesConfigurationKey = $"AzureAd:Scopes" }));
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,19 +33,13 @@ namespace MyToDoListApp
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicyLocalFile",
-                    policy =>
-                    {
-                        //policy.WithOrigins("file:///C:/prodzekty/MyToDoListApp").AllowAnyHeader().AllowAnyMethod();
-                        policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
-                    });
-
                 options.AddPolicy("CorsPolicyGitHub",
                     policy =>
                     {
-                        policy.WithOrigins("http://www.github.com")
+                        policy.WithOrigins("https://djakubas.github.io")
                                             .AllowAnyHeader()
-                                            .AllowAnyMethod();
+                                            .AllowAnyMethod()
+                                            .AllowCredentials();
                     });
             });
 
@@ -47,6 +55,8 @@ namespace MyToDoListApp
             app.UseCors();
             
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

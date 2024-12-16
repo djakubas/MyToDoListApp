@@ -1,13 +1,16 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using MyToDoListApp.Tables;
 using MyToDoListApp.TablesService;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyToDoListApp.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [Authorize]
+    [ApiController]
     public class TasksController : ControllerBase
     {
         private readonly ILogger<TasksController> _logger;
@@ -16,16 +19,18 @@ namespace MyToDoListApp.Controllers
             _logger = logger;
         }
 
-        [EnableCors("CorsPolicyLocalFile")]
+        [EnableCors("CorsPolicyGitHub")]
         [HttpGet()]
+        [RequiredScope("Tasks.Read")]
         public IEnumerable<TableTask> Get()
         {
             var MyToDoListTask = TableTaskService.Get();
             return MyToDoListTask;
         }
 
-        [EnableCors("CorsPolicyLocalFile")]
+        [EnableCors("CorsPolicyGitHub")]
         [HttpGet("{id}")]
+        [RequiredScope("Tasks.Read")]
         public ActionResult<TableTask> Get(int id)
         {
             var MyToDoListTask = TableTaskService.Get(id);
@@ -35,8 +40,9 @@ namespace MyToDoListApp.Controllers
 
             return MyToDoListTask;
         }
-        [EnableCors("CorsPolicyLocalFile")]
+        [EnableCors("CorsPolicyGitHub")]
         [HttpPost]
+        [RequiredScope("Tasks.Write")]
         public IActionResult Create(TableTask task)
         {
             if (TableTaskService.Add(task))
@@ -45,8 +51,9 @@ namespace MyToDoListApp.Controllers
                 return BadRequest();
             
         }
-        [EnableCors("CorsPolicyLocalFile")]
+        [EnableCors("CorsPolicyGitHub")]
         [HttpPut("{id}")]
+        [RequiredScope("Tasks.Write")]
         public IActionResult Create(int id, TableTask task)
         {
             if (id != task.TaskId)
@@ -63,8 +70,9 @@ namespace MyToDoListApp.Controllers
                 return StatusCode(500);
         }
 
-        [EnableCors("CorsPolicyLocalFile")]
+        [EnableCors("CorsPolicyGitHub")]
         [HttpDelete("{id}")]
+        [RequiredScope("Tasks.Write")]
         public IActionResult Delete(int id)
         {
             var ExistingTask = TableTaskService.Get(id);
