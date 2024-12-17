@@ -34,7 +34,7 @@ namespace MyToDoListApp.TablesService
         {
             try
             {
-                context.Add(t);
+                context.Tasks.Add(t);
                 context.SaveChanges();
                 return true;
             }
@@ -49,7 +49,7 @@ namespace MyToDoListApp.TablesService
             try
             {
                 context.Tasks.Update(t);
-                context.SaveChanges();
+                //context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
