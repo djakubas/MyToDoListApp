@@ -18,15 +18,15 @@ namespace MyToDoListApp.TablesService
 
         public static List<TableTask> Get()
         {
-            var context = new DBService();
-            List<TableTask> tasks = context.Tasks.ToList();
-            return tasks;
+            //var context = new DBService();
+            //List<TableTask> tasks = context.Tasks.ToList();
+            //return tasks;
 
             //testing api
-            //List<TableTask> tasks = new List<TableTask>();
-            //var t = new TableTask { Title = "123", Status = "ToDo", TaskId = 1 };
-            //tasks.Add(t);
-            //return tasks;
+            List<TableTask> tasks = new List<TableTask>();
+            var t = new TableTask { Title = "123", Status = "ToDo", TaskId = 1 };
+            tasks.Add(t);
+            return tasks;
         }
         public static bool Add(TableTask t)
         {
