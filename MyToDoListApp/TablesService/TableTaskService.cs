@@ -44,20 +44,36 @@ namespace MyToDoListApp.TablesService
                 return false;
             }
         }
-        public static bool Update(TableTask t, DBService context)
-        {    
+        //public static bool Update(TableTask t, DBService context)
+        //{    
+        //    try
+        //    {
+        //        //context.Tasks.Update(t);
+        //        //context.SaveChanges();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"{ex.ToString()}");
+        //        return false;
+        //    }
+        //}
+
+        public static string Update(TableTask t, DBService context)
+        {
             try
             {
-                //context.Tasks.Update(t);
-                //context.SaveChanges();
-                return true;
+                context.Tasks.Update(t);
+                context.SaveChanges();
+                return "true";
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD {ex.ToString()}");
-                return false;
+                Console.WriteLine($"{ex.ToString()}");
+                return ex.ToString();
             }
         }
+
         public static bool Delete(TableTask t, DBService context)
         {
             try
