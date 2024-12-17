@@ -14,6 +14,7 @@ namespace MyToDoListApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+                       
 
             // Add services to the container.
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(options =>
@@ -27,10 +28,10 @@ namespace MyToDoListApp
                 config.AddPolicy("AuthZPolicy", policyBuilder =>
                     policyBuilder.Requirements.Add(new ScopeAuthorizationRequirement() { RequiredScopesConfigurationKey = $"AzureAd:Scopes" }));
             });
-
+            
             builder.Services.AddDbContext<DBService>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
-
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:AZURE_SQL_CONNECTIONSTRING")));
+                
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
