@@ -13,10 +13,13 @@ namespace MyToDoListApp.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
+        private readonly DBService _context;
+        
         private readonly ILogger<TasksController> _logger;
-        public TasksController(ILogger<TasksController> logger)
+        public TasksController(ILogger<TasksController> logger, DBService context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [EnableCors("CorsPolicyGitHub")]
@@ -24,7 +27,7 @@ namespace MyToDoListApp.Controllers
         [RequiredScope("Tasks.Read")]
         public IEnumerable<TableTask> Get()
         {
-            var MyToDoListTask = TableTaskService.Get();
+            var MyToDoListTask = TableTaskService.Get(_context);
             return MyToDoListTask;
         }
 

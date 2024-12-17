@@ -4,10 +4,24 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MyToDoListApp.TablesService
 {
     public static class TableTaskService
     {
+
+        public static List<TableTask> Get(MyToDoListApp.DBService context)
+        {
+            //var context = new DBService();
+            List<TableTask> tasks = context.Tasks.ToList();
+            return tasks;
+
+            //testing api
+            //List<TableTask> tasks = new List<TableTask>();
+            //var t = new TableTask { Title = "123", Status = "ToDo", TaskId = 1 };
+            //tasks.Add(t);
+            //return tasks;
+        }
         public static TableTask? Get(int id)
         {
             var context = new DBService();
@@ -16,18 +30,7 @@ namespace MyToDoListApp.TablesService
 
         }
 
-        public static List<TableTask> Get()
-        {
-            //var context = new DBService();
-            //List<TableTask> tasks = context.Tasks.ToList();
-            //return tasks;
-
-            //testing api
-            List<TableTask> tasks = new List<TableTask>();
-            var t = new TableTask { Title = "123", Status = "ToDo", TaskId = 1 };
-            tasks.Add(t);
-            return tasks;
-        }
+        
         public static bool Add(TableTask t)
         {
             var context = new DBService();

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyToDoListApp
 {
@@ -26,6 +27,9 @@ namespace MyToDoListApp
                 config.AddPolicy("AuthZPolicy", policyBuilder =>
                     policyBuilder.Requirements.Add(new ScopeAuthorizationRequirement() { RequiredScopesConfigurationKey = $"AzureAd:Scopes" }));
             });
+
+            builder.Services.AddDbContext<DBService>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTION")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
