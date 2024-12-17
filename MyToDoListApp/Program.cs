@@ -30,7 +30,7 @@ namespace MyToDoListApp
             });
             
             builder.Services.AddDbContext<DBService>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings:AZURE_SQL_CONNECTIONSTRING")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
                 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
