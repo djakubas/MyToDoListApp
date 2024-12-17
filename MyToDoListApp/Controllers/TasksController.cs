@@ -5,11 +5,12 @@ using MyToDoListApp.Tables;
 using MyToDoListApp.TablesService;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyToDoListApp.Controllers
 {
     [Route("[controller]")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -24,7 +25,7 @@ namespace MyToDoListApp.Controllers
 
         [EnableCors("CorsPolicyGitHub")]
         [HttpGet()]
-        //[RequiredScope("Tasks.Read")]
+        [RequiredScope("Tasks.Read")]
         public IEnumerable<TableTask> Get()
         {
             var MyToDoListTask = TableTaskService.Get(_context);
@@ -36,7 +37,7 @@ namespace MyToDoListApp.Controllers
         [RequiredScope("Tasks.Read")]
         public ActionResult<TableTask> Get(int id)
         {
-            var MyToDoListTask = TableTaskService.Get(id);
+            var MyToDoListTask = TableTaskService.Get(id, _context);
 
             if (MyToDoListTask == null)
                 return NotFound();
@@ -48,7 +49,7 @@ namespace MyToDoListApp.Controllers
         [RequiredScope("Tasks.Write")]
         public IActionResult Create(TableTask task)
         {
-            if (TableTaskService.Add(task))
+            if (TableTaskService.Add(task, _context))
                 return CreatedAtAction(nameof(Get), new { TaskId = task.TaskId }, task);
             else 
                 return BadRequest();
@@ -62,12 +63,12 @@ namespace MyToDoListApp.Controllers
             if (id != task.TaskId)
                 return BadRequest();
 
-            var ExistingTask = TableTaskService.Get(id);
+            var ExistingTask = TableTaskService.Get(id, _context);
 
             if (ExistingTask is null)
                 return NotFound();
 
-            if (TableTaskService.Update(task))
+            if (TableTaskService.Update(task, _context))
                 return NoContent();
             else
                 return StatusCode(500);
@@ -78,12 +79,12 @@ namespace MyToDoListApp.Controllers
         [RequiredScope("Tasks.Write")]
         public IActionResult Delete(int id)
         {
-            var ExistingTask = TableTaskService.Get(id);
+            var ExistingTask = TableTaskService.Get(id, _context);
 
             if (ExistingTask is null)
                 return NotFound();  
             else
-                TableTaskService.Delete(ExistingTask);
+                TableTaskService.Delete(ExistingTask, _context);
                 return NoContent();
         }
 

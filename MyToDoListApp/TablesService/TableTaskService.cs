@@ -10,7 +10,7 @@ namespace MyToDoListApp.TablesService
     public static class TableTaskService
     {
 
-        public static List<TableTask> Get(MyToDoListApp.DBService context)
+        public static List<TableTask> Get(DBService context)
         {
             //var context = new DBService();
             List<TableTask> tasks = context.Tasks.ToList();
@@ -22,18 +22,16 @@ namespace MyToDoListApp.TablesService
             //tasks.Add(t);
             //return tasks;
         }
-        public static TableTask? Get(int id)
+        public static TableTask? Get(int id, DBService context)
         {
-            var context = new DBService();
             var TaskByID = context.Tasks.Where(s => s.TaskId == id);
             return TaskByID.FirstOrDefault();
 
         }
 
         
-        public static bool Add(TableTask t)
+        public static bool Add(TableTask t, DBService context)
         {
-            var context = new DBService();
             try
             {
                 context.Add(t);
@@ -46,10 +44,8 @@ namespace MyToDoListApp.TablesService
                 return false;
             }
         }
-        public static bool Update(TableTask t)
-        {
-            var context = new DBService();
-            
+        public static bool Update(TableTask t, DBService context)
+        {    
             try
             {
                 context.Tasks.Update(t);
@@ -62,9 +58,8 @@ namespace MyToDoListApp.TablesService
                 return false;
             }
         }
-        public static bool Delete(TableTask task)
+        public static bool Delete(TableTask task, DBService context)
         {
-            var context = new DBService();
             try
             {
                 context.Tasks.Remove(task);
