@@ -71,7 +71,8 @@ namespace MyToDoListApp.Controllers
             if (TableTaskService.Update(task, _context))
                 return NoContent();
             else
-                return StatusCode(500);
+                //return StatusCode(500);
+                return NotFound();
         }
 
         [EnableCors("CorsPolicyGitHub")]
