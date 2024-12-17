@@ -48,8 +48,8 @@ namespace MyToDoListApp.TablesService
         {    
             try
             {
-                context.Tasks.Update(t);
-                context.SaveChanges();
+                //context.Tasks.Update(t);
+                //context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
