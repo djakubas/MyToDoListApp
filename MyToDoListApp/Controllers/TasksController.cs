@@ -58,22 +58,20 @@ namespace MyToDoListApp.Controllers
         [EnableCors("CorsPolicyGitHub")]
         [HttpPut("{id}")]
         [RequiredScope("Tasks.Write")]
-        //public IActionResult Create(int id, TableTask task)
-        public string Create(int id, TableTask task)
+        public IActionResult Create(int id, TableTask task)
         {
             if (id != task.TaskId)
-                return "badReq"; //BadRequest();
-
+                return BadRequest();
+            
             var ExistingTask = TableTaskService.Get(id, _context);
-
+            
             if (ExistingTask is null)
-                return "notfound"; //NotFound();
-            return TableTaskService.Update(task, _context);
-            //if (TableTaskService.Update(task, _context))
-            //    return NoContent();
-            //else
-            //    return StatusCode(500);
-            //return NotFound();
+                return NotFound();
+
+            if (TableTaskService.Update(task, _context))
+                return NoContent();
+            else
+                return StatusCode(500);
         }
 
         [EnableCors("CorsPolicyGitHub")]
