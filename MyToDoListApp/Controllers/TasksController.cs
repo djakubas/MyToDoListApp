@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MyToDoListApp.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace MyToDoListApp.Controllers
 
         [EnableCors("CorsPolicyGitHub")]
         [HttpGet()]
-        [RequiredScope("Tasks.Read")]
+        //[RequiredScope("Tasks.Read")]
         public IEnumerable<TableTask> Get()
         {
             var MyToDoListTask = TableTaskService.Get();
