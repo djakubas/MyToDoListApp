@@ -49,20 +49,20 @@ namespace MyToDoListApp.TablesService
             try
             {
                 context.Tasks.Update(t);
-                //context.SaveChanges();
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine($"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD {ex.ToString()}");
                 return false;
             }
         }
-        public static bool Delete(TableTask task, DBService context)
+        public static bool Delete(TableTask t, DBService context)
         {
             try
             {
-                context.Tasks.Remove(task);
+                context.Tasks.Remove(t);
                 context.SaveChanges();
                 return true;
             }
